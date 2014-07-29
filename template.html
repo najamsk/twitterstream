@@ -17,25 +17,30 @@
 			var ul = document.getElementById("tweets");
 			var counter = 0, tcount =document.getElementById("tcount"); 
             var timer = 0;
+            var allTweets = [];
 			socket.on('tweet', function (tweet) {
 				if(counter === 0)
 				{
 					//console.log(socket);
 					//console.log(tweet);	
                 }
-
-
-                var li = document.createElement("li");
-
-                li.innerHTML = "<strong>" + tweet.user.screen_name + ": </strong> " + tweet.text;
-                counter += 1;
-                //timer = counter * 5000;
-                tcount.innerHTML = "Gaza Tweets: " + counter;
-                ul.insertBefore(li, ul.getElementsByTagName("li")[0]);	
-
+                allTweets.push(tweet);
 				
 				
 			});
+           setInterval(function(){
+                   // every 1000ms take the oldest tweet of the array a send it to me
+                   var tweet = allTweets.shift();
+                   if (tweet) {
+                    var li = document.createElement("li");
+                    li.innerHTML = "<strong>" + tweet.user.screen_name + ": </strong> " + tweet.text;
+                    counter += 1;
+                    //timer = counter * 5000;
+                    tcount.innerHTML = "Gaza Tweets: " + counter;
+                    ul.insertBefore(li, ul.getElementsByTagName("li")[0]);	
+                   }
+            }, 1000); 
+            
 		</script>
 	
 	</body>
