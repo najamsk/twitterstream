@@ -32,6 +32,7 @@ var t = new twitter({
     access_token_secret: 'BauzAvpBKBioyef3vllFlNbJzyIFaXR2LgU7hZx0TjoWv'     // <--- FILL ME IN
 });
 
+var allTweets = [];
 t.stream('statuses/filter', { track: ['gaza'] }, function(stream) {
 
   //We have a connection. Now watch the 'data' event for incomming tweets.
@@ -48,7 +49,8 @@ t.stream('statuses/filter', { track: ['gaza'] }, function(stream) {
 
       //We're gunna do some indexOf comparisons and we want it to be case agnostic.
       var text = tweet.text.toLowerCase();
-      io.sockets.emit("tweet", tweet);
+      allTweets.push(tweet);
+      //io.sockets.emit("tweet", tweet);
 	    
  		
       
@@ -58,6 +60,13 @@ t.stream('statuses/filter', { track: ['gaza'] }, function(stream) {
 		// console.log("Disconnected");
 	});
 });
+setInterval(function(){
+  // every 1000ms take the oldest tweet of the array a send it to me
+  var nextTweet = allTweets.shift();
+  if (nextTweet) {
+     io.sockets.emit("tweet", nextTweet);
+  }
+}, 1000);
 
 // http.createServer(function(req, res) {
 //     res.writeHead(200, { 'Content-Type': 'text/plain' });

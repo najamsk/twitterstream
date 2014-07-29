@@ -16,20 +16,24 @@
 			var socket = io.connect('http://127.0.0.1:1337');	
 			var ul = document.getElementById("tweets");
 			var counter = 0, tcount =document.getElementById("tcount"); 
+            var timer = 0;
 			socket.on('tweet', function (tweet) {
 				if(counter === 0)
 				{
 					//console.log(socket);
 					//console.log(tweet);	
-				}
-					
+                }
+
+
+                var li = document.createElement("li");
+
+                li.innerHTML = "<strong>" + tweet.user.screen_name + ": </strong> " + tweet.text;
+                counter += 1;
+                //timer = counter * 5000;
+                tcount.innerHTML = "Gaza Tweets: " + counter;
+                ul.insertBefore(li, ul.getElementsByTagName("li")[0]);	
+
 				
-		  			var li = document.createElement("li");
-				
-					li.innerHTML = "<strong>" + tweet.user.screen_name + ": </strong> " + tweet.text;
-					counter += 1;
-					tcount.innerHTML = "Gaza Tweets: " + counter;
-					ul.insertBefore(li, ul.getElementsByTagName("li")[0]);	
 				
 			});
 		</script>
