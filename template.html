@@ -13,24 +13,24 @@
 		</ul>
 		
 		<script type="text/javascript">
-			var socket = io.connect('http://young-plains-8080.herokuapp.com/');	
+			var socket = io.connect('http://127.0.0.1:1337');	
 			var ul = document.getElementById("tweets");
 			var counter = 0, tcount =document.getElementById("tcount"); 
 			socket.on('tweet', function (tweet) {
 				if(counter === 0)
 				{
 					//console.log(socket);
-					console.log(tweet);	
+					//console.log(tweet);	
 				}
 					
-				setTimeout(function() {
+				
 		  			var li = document.createElement("li");
 				
 					li.innerHTML = "<strong>" + tweet.user.screen_name + ": </strong> " + tweet.text;
 					counter += 1;
 					tcount.innerHTML = "Gaza Tweets: " + counter;
 					ul.insertBefore(li, ul.getElementsByTagName("li")[0]);	
-				}, 5000); 
+				
 			});
 		</script>
 	

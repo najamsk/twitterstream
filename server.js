@@ -48,9 +48,8 @@ t.stream('statuses/filter', { track: ['gaza'] }, function(stream) {
 
       //We're gunna do some indexOf comparisons and we want it to be case agnostic.
       var text = tweet.text.toLowerCase();
-	    setTimeout(function() {
-		  io.sockets.emit("tweet", tweet);
-		}, 5000);  
+      io.sockets.emit("tweet", tweet);
+	    
  		
       
     }
